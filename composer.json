@@ -11,9 +11,6 @@
             "email": "heromantor@users.sourceforge.net"
         }
     ],
-    "require": {
-
-    }, 
     "autoload": {
         "psr-0": {
             "phpMorphy": "src/"
