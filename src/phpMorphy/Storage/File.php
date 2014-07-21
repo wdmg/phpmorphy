@@ -36,7 +36,7 @@ class phpMorphy_Storage_File extends phpMorphy_Storage_StorageAbstract  {
             throw new phpMorphy_Exception("Can`t seek to $offset offset");
         }
 
-        return fread($this->resource, $len);
+        return stream_get_contents($this->resource, $len);
     }
 
     function open($fileName) {
