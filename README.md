@@ -30,7 +30,7 @@ Then run Composer's install or update commands to complete installation.
 
 ## Usage
 
-See examples in `examples` directory.
+See examples in [examples](examples) directory.
 
 ## Speed
 
