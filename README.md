@@ -15,7 +15,25 @@ This library allows to retrieve following morph information for any word:
  * all forms;
  * grammatical (part of speech, grammems) information.
 
+## Installation
+
+To install the library in your project using `Composer`, first add the following to your `composer.json`
+config file:
+```javascript
+{
+    "require": {
+        "maxakawizard/phpmorphy": "~1.0"
+    }
+}
+```
+Then run Composer's install or update commands to complete installation.
+
+## Usage
+
+See examples in `examples` directory.
+
 ## Speed
+
 ### Single word mode
 
 | mode          | base form       | all forms     | all forms with gram. info |
@@ -37,12 +55,3 @@ This library allows to retrieve following morph information for any word:
 Note:
 > All values are words per second speed.
 > Test platform: PHP 5.2.3, AMD Duron 800 with 512Mb memory, WinXP.
-
-
-## Installation
-
-See [INSTALL](INSTALL) file in current directory.
-
-## Usage
-
-See example in `./examples` directory.
