@@ -1,11 +1,16 @@
 {
-    "name": "umisoft/phpmorphy",
-    "description": "phpMorphy - morphological analyzer library for Russisan, English and German languages",
+    "name": "maxakawizard/phpmorphy",
+    "description": "phpMorphy - morphological analyzer library for Russian, English and German languages",
     "keywords": ["phpMorphy"],
-    "homepage": "http://phpmorphy.sourceforge.net/",
+    "homepage": "https://github.com/MAXakaWIZARD/phpmorphy",
     "type": "library",
-    "license": "GNU GPL 2.1",
+    "license": "MIT",
     "authors": [
+        {
+            "name": "Max Grigorian",
+            "email": "maxakawizard@gmail.com",
+            "homepage": "http://wizardcat.com"
+        },
         {
             "name": "Kamaev Vladimir",
             "email": "heromantor@users.sourceforge.net"
@@ -13,7 +18,22 @@
     ],
     "autoload": {
         "psr-0": {
-            "phpMorphy": "src/"
+            "": "src"
+        },
+        "files": [
+            "src/common.php"
+        ]
+    },
+    "require": {
+        "php": ">=5.3",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.8"
+    },
+    "config": {
+        "platform": {
+            "php": "5.3.9"
         }
     }
 }

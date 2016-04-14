@@ -42,8 +42,7 @@ class test_Functional_Common extends PHPUnit_Framework_TestCase {
 
     function testNotSplitParadigms() {
         $paradigms = $this->morphy->findWord($this->toMorphyEncoding('айда'));
-
-        $this->assertEquals(1, count($paradigms));
+        $this->assertEquals(2, count($paradigms));
     }
 
     function testFindWord() {

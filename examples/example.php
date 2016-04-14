@@ -2,7 +2,7 @@
 error_reporting(E_ALL | E_STRICT);
 
 // first we include phpmorphy library
-require_once(__DIR__ . '/../src/common.php');
+require_once(__DIR__ . '/../vendor/autoload.php');
 
 // set some options
 $opts = array(
@@ -20,14 +20,11 @@ $opts = array(
 );
 
 // Path to directory where dictionaries located
-$dir = __DIR__ . '/../dicts';
-
-// Create descriptor for dictionary located in $dir directory with russian language
-$dict_bundle = new phpMorphy_FilesBundle($dir, 'rus');
+$dir = __DIR__ . '/../dicts/utf-8';
 
 // Create phpMorphy instance
 try {
-	$morphy = new phpMorphy($dict_bundle, $opts);
+	$morphy = new phpMorphy($dir, 'ru_RU', $opts);
 } catch(phpMorphy_Exception $e) {
 	die('Error occured while creating phpMorphy instance: ' . $e->getMessage());
 }
@@ -47,8 +44,8 @@ try {
 // setlocale(LC_CTYPE, array('ru_RU.CP1251', 'Russian_Russia.1251'));
 
 // Hint: in this example words $word_one, $word_two are in russian language(cp1251 encoding)
-$word_one = '��������';
-$word_two = '���������������';
+$word_one = 'КОТ';
+$word_two = 'СОБАКА';
 
 echo "Testing single mode...\n";
 

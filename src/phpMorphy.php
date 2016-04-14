@@ -24,15 +24,9 @@ if(!defined('PHPMORPHY_DIR')) {
     define('PHPMORPHY_DIR', __DIR__);
 }
 
-require_once(PHPMORPHY_DIR . '/phpMorphy/Loader.php');
-
-spl_autoload_register(array(new phpMorphy_Loader(PHPMORPHY_DIR), 'loadClass'));
-
-if(extension_loaded('morphy')) {
-    throw new phpMorphy_Exception("todo: php extension not implemented");
-} else {
-    class phpMorphy extends phpMorphy_MorphyNative {
-    }
+class phpMorphy extends phpMorphy_MorphyNative
+{
+    
 }
 
 define('PHPMORPHY_STORAGE_FILE', phpMorphy::STORAGE_FILE);
