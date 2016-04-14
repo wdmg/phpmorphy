@@ -12,8 +12,8 @@ $word = $argv[1];
 
 $lang = $argc > 2 ? $argv[2] : 'ru_RU';
 
-$dir = __DIR__ . '/../dicts/';
-$dir .= $argc > 3 ? "/{$argv[3]}" : 'utf-8';
+$encoding .= $argc > 3 ? $argv[3] : 'utf-8';
+$dir = phpMorphy::getDefaultDictsDir($encoding);
 
 $opts = array(
     'storage' => phpMorphy::STORAGE_FILE,

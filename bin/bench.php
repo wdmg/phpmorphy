@@ -14,9 +14,9 @@ $cwd = getcwd();
 $text_file = $argv[1];
 $encoding = $argc > 2 ? $argv[2] : 'utf-8';
 $file_encoding = $argc > 3 ? $argv[3] : 'utf-8';
-$lang = 'rus';
+$lang = 'ru_RU';
 
-$dict_dir = PHPMORPHY_DIR . '/../dicts/' . $encoding;
+$dict_dir = phpMorphy::getDefaultDictsDir($encoding);
 
 $words = load_words($text_file, REMOVE_DUPLICATES, $encoding, $file_encoding);
 

@@ -4,7 +4,7 @@ require_once(__DIR__ . '/init.php');
 
 $user_dict_xml = PHPMORPHY_DIR . '/../bin/user_dict.xml';
 $outXmlFilePath = PHPMORPHY_DIR . '/../bin/out.xml';
-$morphy_dict_dir = PHPMORPHY_DIR . '/../dicts/utf-8';
+$morphy_dict_dir = phpMorphy::getDefaultDictsDir();
 $morphy_dict_lang = 'ru_RU';
 $verbose = true;
 

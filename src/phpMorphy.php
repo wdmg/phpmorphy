@@ -57,19 +57,25 @@ class phpMorphy implements phpMorphy_MorphyInterface {
         ;
 
     function __construct($dir = null, $lang = null, $options = array()) {
-        $this->options = $options = $this->repairOptions($options);
+        $this->options = $this->repairOptions($options);
 
-        // TODO: use two versions of phpMorphy class i.e. phpMorphy_v3 { } ... phpMorphy_v2 extends phpMorphy_v3
-        if($dir instanceof phpMorphy_FilesBundle && is_array($lang)) {
-            $this->initOldStyle($dir, $lang);
+        if ($dir instanceof phpMorphy_FilesBundle) {
+            $bundle = $dir;
         } else {
             if (is_null($dir)) {
-                $dir = __DIR__ . '/../dicts/utf-8';
+                $dir = $this->getDefaultDictsDir($this->options['encoding']);
             }
-            $this->initNewStyle($this->createFilesBundle($dir, $lang), $options);
+            $bundle = $this->createFilesBundle($dir, $lang);
         }
 
+        $this->init($bundle);
+
         $this->last_prediction_type = self::PREDICT_BY_NONE;
+    }
+
+    public static function getDefaultDictsDir($encoding = 'utf-8')
+    {
+        return __DIR__ . '/../dicts/' . $encoding;
     }
 
     /**
@@ -160,14 +166,14 @@ class phpMorphy implements phpMorphy_MorphyInterface {
     }
 
     /**
-     * @return phpMorphy_GrammemsProvider_Base
+     * @return phpMorphy_GrammemsProvider_GrammemsProviderInterface
      */
     function getGrammemsProvider() {
         return clone $this->__grammems_provider;
     }
 
     /**
-     * @return phpMorphy_GrammemsProvider_Base
+     * @return phpMorphy_GrammemsProvider_GrammemsProviderInterface
      */
     function getDefaultGrammemsProvider() {
         return $this->__grammems_provider;
@@ -496,11 +502,10 @@ class phpMorphy implements phpMorphy_MorphyInterface {
     ////////////////
     // init code
     ////////////////
-    protected function initNewStyle(phpMorphy_FilesBundle $bundle, $options) {
-        $this->options = $options = $this->repairOptions($options);
-        $storage_type = $options['storage'];
+    protected function init(phpMorphy_FilesBundle $bundle) {
+        $storage_type = $this->options['storage'];
 
-        $storage_factory = $this->storage_factory = $this->createStorageFactory($options['shm']);
+        $storage_factory = $this->storage_factory = $this->createStorageFactory($this->options['shm']);
         $graminfo_as_text = $this->options['graminfo_as_text'];
 
         // fsa
@@ -574,36 +579,6 @@ class phpMorphy implements phpMorphy_MorphyInterface {
         return isset($name) ? $name : phpMorphy_Source_Dba::getDefaultHandler();
     }
 
-    protected function initOldStyle(phpMorphy_FilesBundle $bundle, $options) {
-        $options = $this->repairOptions($options);
-
-        switch($bundle->getLang()) {
-            case 'rus':
-                $bundle->setLang('ru_RU');
-                break;
-            case 'eng':
-                $bundle->setLang('en_EN');
-                break;
-            case 'ger':
-                $bundle->setLang('de_DE');
-                break;
-            default:
-                $lang = $bundle->getLang();
-                throw new phpMorphy_Exception("Invalid lang '$lang', valid values are [rus, eng, ger]");
-        }
-
-        $this->initNewStyle($bundle, $options);
-    }
-
-    protected function repairOldOptions($options) {
-        $defaults = array(
-            'predict_by_suffix' => false,
-            'predict_by_db' => false,
-        );
-
-        return (array)$options + $defaults;
-    }
-
     protected function repairSourceOptions($options) {
         $defaults = array(
             'type' => phpMorphy_Source_SourceFactory::SOURCE_FSA,
@@ -622,10 +597,11 @@ class phpMorphy implements phpMorphy_MorphyInterface {
             'predict_by_suffix' => true,
             'predict_by_db' => true,
             'use_ancodes_cache' => false,
-            'resolve_ancodes' => self::RESOLVE_ANCODES_AS_TEXT
+            'resolve_ancodes' => self::RESOLVE_ANCODES_AS_TEXT,
+            'encoding' => 'utf-8'
         );
 
-        return (array)$options + $defaults;
+        return array_merge($defaults, $options);
     }
 
     function __get($name) {
