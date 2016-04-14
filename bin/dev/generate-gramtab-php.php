@@ -1,12 +1,10 @@
 #!/usr/bin/env php
 <?php
-set_include_path(__DIR__ . '/../../src/' . PATH_SEPARATOR . get_include_path());
-require('phpMorphy.php');
-
-$gramtab_consts_file = PHPMORPHY_DIR . '/phpMorphy/GramTab/gramtab_consts.php';
+require_once(__DIR__ . '/../init.php');
 
 try {
-    phpMorphy_Generator_GramTab::generatePhp($gramtab_consts_file);
+    $gramtabConstsFile = PHPMORPHY_DIR . '/GramTab/Constants.php';
+    phpMorphy_Generator_GramTab::generatePhp($gramtabConstsFile);
 } catch (Exception $e) {
     echo $e;
     exit(1);

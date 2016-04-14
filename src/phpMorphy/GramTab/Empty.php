@@ -25,7 +25,6 @@ class phpMorphy_GramTab_Empty implements phpMorphy_GramTab_GramTabInterface {
     function getPartOfSpeech($ancodeId) { return 0; }
     function resolveGrammemIds($ids) { return is_array($ids) ? array() : ''; }
     function resolvePartOfSpeechId($id) { return ''; }
-    function includeConsts() { }
     function ancodeToString($ancodeId, $commonAncode = null) { return ''; }
     function stringToAncode($string) { return null; }
     function toString($partOfSpeechId, $grammemIds) { return ''; }

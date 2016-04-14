@@ -1,7 +1,6 @@
 #!/usr/bin/env php
 <?php
-set_include_path(__DIR__ . '/../src/' . PATH_SEPARATOR . get_include_path());
-require('phpMorphy.php');
+require_once(__DIR__ . '/init.php');
 
 $user_dict_xml = PHPMORPHY_DIR . '/../bin/user_dict.xml';
 $outXmlFilePath = PHPMORPHY_DIR . '/../bin/out.xml';
@@ -17,7 +16,7 @@ $verbose = true;
  */
 function createMorphy($dir, $lang) {
     $opts = array(
-        'storage' => PHPMORPHY_STORAGE_MEM,
+        'storage' => phpMorphy::STORAGE_MEM,
         'predict_by_suffix' => true,
         'predict_by_db' => true,
     );

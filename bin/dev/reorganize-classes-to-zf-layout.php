@@ -1,7 +1,6 @@
 #!/usr/bin/env php
 <?php
-set_include_path(__DIR__ . '/../../src/' . PATH_SEPARATOR . get_include_path());
-require('phpMorphy.php');
+require_once(__DIR__ . '/../init.php');
 
 $root_dir = PHPMORPHY_DIR . '/phpMorphy';
 $out_dir = PHPMORPHY_DIR;

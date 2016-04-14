@@ -1,9 +1,8 @@
 #!/usr/bin/env php
 <?php
-set_include_path(__DIR__ . '/../../src/' . PATH_SEPARATOR . get_include_path());
-require('phpMorphy.php');
+require_once(__DIR__ . '/../init.php');
 
-if($argc < 3) {
+if ($argc < 3) {
     echo "Usage " . $argv[0] . " MORPH_DATA_FILE LANGUAGE OUT_DIR";
     exit;
 }
@@ -14,7 +13,7 @@ $out_dir = $argv[3];
 
 try {
     $factory = new phpMorphy_Storage_Factory();
-    $graminfo = phpMorphy_GramInfo_GramInfoAbstract::create($factory->create(PHPMORPHY_STORAGE_FILE, $graminfo_file, false), false);
+    $graminfo = phpMorphy_GramInfo_GramInfoAbstract::create($factory->create(phpMorphy::STORAGE_FILE, $graminfo_file, false), false);
     $out_file = $out_dir . '/morph_data_ancodes_map.' . strtolower($graminfo->getLocale()) . '.bin';
 
     $gramtab_map = get_gramtab_map($language);

@@ -51,12 +51,6 @@ interface phpMorphy_GramTab_GramTabInterface {
 
     /**
      * @abstract
-     * @return void
-     */
-    function includeConsts();
-
-    /**
-     * @abstract
      * @param string|int $ancodeId
      * @param string|int $commonAncode
      * @return string|int

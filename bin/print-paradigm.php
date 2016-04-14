@@ -1,11 +1,10 @@
 #!/usr/bin/env php
 <?php
-set_include_path(__DIR__ . '/../src/' . PATH_SEPARATOR . get_include_path());
-require('phpMorphy.php');
+require_once(__DIR__ . '/init.php');
 
 define('WORD_NOT_FOUND', 1);
 
-if($argc < 2) {
+if ($argc < 2) {
     die("Usage $argv[0] WORD [LANG] [ENCODING]" . PHP_EOL);
 }
 
@@ -17,7 +16,7 @@ $dir = __DIR__ . '/../dicts/';
 $dir .= $argc > 3 ? "/{$argv[3]}" : 'utf-8';
 
 $opts = array(
-    'storage' => PHPMORPHY_STORAGE_FILE,
+    'storage' => phpMorphy::STORAGE_FILE,
     'predict_by_suffix' => true,
     'predict_by_db' => true,
 );
