@@ -19,12 +19,9 @@ $opts = array(
 	'predict_by_db' => true
 );
 
-// Path to directory where dictionaries located
-$dir = __DIR__ . '/../dicts/utf-8';
-
 // Create phpMorphy instance
 try {
-	$morphy = new phpMorphy($dir, 'ru_RU', $opts);
+	$morphy = new phpMorphy(null, 'ru_RU', $opts);
 } catch(phpMorphy_Exception $e) {
 	die('Error occured while creating phpMorphy instance: ' . $e->getMessage());
 }

@@ -14,7 +14,7 @@ class test_Functional_Common extends PHPUnit_Framework_TestCase {
         );
         
         $this->morphy = new phpMorphy(
-            __DIR__ . '/../../dicts/utf-8',
+            null,
             'ru_RU',
             $opts
         );

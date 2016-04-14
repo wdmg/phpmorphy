@@ -45,13 +45,16 @@ class phpMorphy_MorphyNative implements phpMorphy_MorphyInterface {
         $last_prediction_type
         ;
 
-    function __construct($dir, $lang = null, $options = array()) {
+    function __construct($dir = null, $lang = null, $options = array()) {
         $this->options = $options = $this->repairOptions($options);
 
         // TODO: use two versions of phpMorphy class i.e. phpMorphy_v3 { } ... phpMorphy_v2 extends phpMorphy_v3
         if($dir instanceof phpMorphy_FilesBundle && is_array($lang)) {
             $this->initOldStyle($dir, $lang);
         } else {
+            if (is_null($dir)) {
+                $dir = __DIR__ . '/../../dicts/utf-8';
+            }
             $this->initNewStyle($this->createFilesBundle($dir, $lang), $options);
         }
 
