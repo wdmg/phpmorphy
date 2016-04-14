@@ -20,15 +20,7 @@
 * Boston, MA 02111-1307, USA.
 */
 
-if(!defined('PHPMORPHY_DIR')) {
-    define('PHPMORPHY_DIR', __DIR__);
-}
-
 class phpMorphy extends phpMorphy_MorphyNative
 {
-    
-}
 
-define('PHPMORPHY_STORAGE_FILE', phpMorphy::STORAGE_FILE);
-define('PHPMORPHY_STORAGE_MEM', phpMorphy::STORAGE_MEM);
-define('PHPMORPHY_STORAGE_SHM', phpMorphy::STORAGE_SHM);
+}

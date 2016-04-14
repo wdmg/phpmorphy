@@ -7,10 +7,12 @@ require_once(__DIR__ . '/../vendor/autoload.php');
 // set some options
 $opts = array(
 	// storage type, follow types supported
-	// PHPMORPHY_STORAGE_FILE - use file operations(fread, fseek) for dictionary access, this is very slow...
-	// PHPMORPHY_STORAGE_SHM - load dictionary in shared memory(using shmop php extension), this is preferred mode
-	// PHPMORPHY_STORAGE_MEM - load dict to memory each time when phpMorphy intialized, this useful when shmop ext. not activated. Speed same as for PHPMORPHY_STORAGE_SHM type
-	'storage' => PHPMORPHY_STORAGE_FILE,
+	// phpMorphy::STORAGE_FILE - use file operations(fread, fseek) for dictionary access, this is very slow...
+	// phpMorphy::STORAGE_SHM - load dictionary in shared memory(using shmop php extension), this is preferred mode
+	// phpMorphy::STORAGE_MEM - load dict to memory each time when phpMorphy intialized,
+	// this is useful when shmop ext is not activated.
+	// Speed same as for phpMorphy::STORAGE_SHM type
+	'storage' => phpMorphy::STORAGE_FILE,
 	// Extend graminfo for getAllFormsWithGramInfo method call
 	'with_gramtab' => false,
 	// Enable prediction by suffix

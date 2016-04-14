@@ -23,8 +23,21 @@
 phpMorphy_Util_MbstringOverloadFixer::fix();
 
 class phpMorphy_MorphyNative implements phpMorphy_MorphyInterface {
+    /**
+     * Use file operations(fread, fseek) for dictionary access, this is very slow
+     */
     const STORAGE_FILE = phpMorphy_Storage_Factory::STORAGE_FILE;
+
+    /**
+     * Load dict to memory each time when phpMorphy intialized,
+     * this is useful when shmop ext is not activated.
+     * Speed is same as for STORAGE_SHM type
+     */
     const STORAGE_MEM = phpMorphy_Storage_Factory::STORAGE_MEM;
+
+    /**
+     * Load dictionary in shared memory(using shmop php extension), this is preferred mode
+     */
     const STORAGE_SHM = phpMorphy_Storage_Factory::STORAGE_SHM;
     
     protected
@@ -610,7 +623,7 @@ class phpMorphy_MorphyNative implements phpMorphy_MorphyInterface {
         $defaults = array(
             'shm' => array(),
             'graminfo_as_text' => true,
-            'storage' => PHPMORPHY_STORAGE_FILE,
+            'storage' => self::STORAGE_FILE,
             'common_source' => $this->repairSourceOptions(isset($options['common_source']) ? $options['common_source'] : array()),
             'predict_by_suffix' => true,
             'predict_by_db' => true,
