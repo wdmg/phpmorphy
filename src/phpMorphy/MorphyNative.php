@@ -62,21 +62,21 @@ class phpMorphy_MorphyNative implements phpMorphy_MorphyInterface {
     }
 
     /**
-    * @return phpMorphy_Morphier_Interface
+    * @return phpMorphy_Morphier_MorphierInterface
     */
     function getCommonMorphier() {
         return $this->__common_morphier;
     }
 
     /**
-    * @return phpMorphy_Morphier_Interface
+    * @return phpMorphy_Morphier_MorphierInterface
     */
     function getPredictBySuffixMorphier() {
         return $this->__predict_by_suf_morphier;
     }
 
     /**
-    * @return phpMorphy_Morphier_Interface
+    * @return phpMorphy_Morphier_MorphierInterface
     */
     function getPredictByDatabaseMorphier() {
         return $this->__predict_by_db_morphier;
@@ -671,7 +671,7 @@ class phpMorphy_MorphyNative implements phpMorphy_MorphyInterface {
         return phpMorphy_GrammemsProvider_Factory::create($this);
     }
 
-    protected function createParadimSerializer() {
+    protected function createParadigmSerializer() {
         return new phpMorphy_Paradigm_CollectionSerializer();
     }
 
