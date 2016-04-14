@@ -78,7 +78,7 @@ abstract class phpMorphy_Storage_StorageAbstract implements phpMorphy_Storage_St
                 . "' file: " . $e->getMessage());
         }
 
-        if ($exactLength && $GLOBALS['__phpmorphy_strlen']($result) < $len) {
+        if ($exactLength && strlen($result) < $len) {
             throw new phpMorphy_Exception(
                 "Can`t read $len bytes at $offset offset, from '" . $this->getFileName()
                 . "' file");

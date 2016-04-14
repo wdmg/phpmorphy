@@ -20,8 +20,6 @@
 * Boston, MA 02111-1307, USA.
 */
 
-phpMorphy_Util_MbstringOverloadFixer::fix();
-
 class phpMorphy_MorphyNative implements phpMorphy_MorphyInterface {
     /**
      * Use file operations(fread, fseek) for dictionary access, this is very slow
@@ -133,10 +131,6 @@ class phpMorphy_MorphyNative implements phpMorphy_MorphyInterface {
 
         if(!count($words)) {
             throw new phpMorphy_Exception("Can`t find first word");
-        }
-
-        if(!extension_loaded('mbstring')) {
-            throw new phpMorphy_Exception("phpMorphy::isInUpperCase requires mb_string extension");
         }
 
         $encoding = $this->getEncoding();

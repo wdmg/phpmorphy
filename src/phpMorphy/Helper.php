@@ -141,16 +141,16 @@ class phpMorphy_Helper {
 
     protected function getBaseAndPrefix($word, $cplen, $plen, $flen) {
         if($flen) {
-            $base = $GLOBALS['__phpmorphy_substr']($word, $cplen + $plen, -$flen);
+            $base = substr($word, $cplen + $plen, -$flen);
         } else {
             if($cplen || $plen) {
-                $base = $GLOBALS['__phpmorphy_substr']($word, $cplen + $plen);
+                $base = substr($word, $cplen + $plen);
             } else {
                 $base = $word;
             }
         }
 
-        $prefix = $cplen ? $GLOBALS['__phpmorphy_substr']($word, 0, $cplen) : '';
+        $prefix = $cplen ? substr($word, 0, $cplen) : '';
 
         return array($base, $prefix);
     }

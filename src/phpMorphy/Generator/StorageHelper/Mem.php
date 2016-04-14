@@ -41,5 +41,5 @@ class phpMorphy_Generator_StorageHelper_Mem implements phpMorphy_Generator_Stora
     /**
      * @return string
      */
-    function read($offset, $len) { return "\$GLOBALS['__phpmorphy_substr'](\$__mem, $offset, $len)"; }
+    function read($offset, $len) { return "\substr(\$__mem, $offset, $len)"; }
 }

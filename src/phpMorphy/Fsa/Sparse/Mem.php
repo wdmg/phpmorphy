@@ -24,7 +24,7 @@ class phpMorphy_Fsa_Sparse_Mem extends phpMorphy_Fsa_FsaAbstract {
     function walk($trans, $word, $readAnnot = true) {
         $__mem = $this->resource; $fsa_start = $this->fsa_start;
 
-        for($i = 0, $c = $GLOBALS['__phpmorphy_strlen']($word); $i < $c; $i++) {
+        for($i = 0, $c = strlen($word); $i < $c; $i++) {
             $prev_trans = $trans;
             $char = ord($word[$i]);
 
@@ -32,7 +32,7 @@ class phpMorphy_Fsa_Sparse_Mem extends phpMorphy_Fsa_FsaAbstract {
             // find char in state begin
 			// sparse version
 			$result = true;
-						list(, $trans) = unpack('V', $GLOBALS['__phpmorphy_substr']($__mem, $fsa_start + (((($trans >> 10) & 0x3FFFFF) + $char + 1) << 2), 4));
+						list(, $trans) = unpack('V', substr($__mem, $fsa_start + (((($trans >> 10) & 0x3FFFFF) + $char + 1) << 2), 4));
 
 			if(($trans & 0x0200) || ($trans & 0xFF) != $char) {
 				$result = false;
@@ -56,7 +56,7 @@ class phpMorphy_Fsa_Sparse_Mem extends phpMorphy_Fsa_FsaAbstract {
 
             if($readAnnot) {
                 // read annot trans
-                                list(, $trans) = unpack('V', $GLOBALS['__phpmorphy_substr']($__mem, $fsa_start + ((($trans >> 10) & 0x3FFFFF) << 2), 4));
+                                list(, $trans) = unpack('V', substr($__mem, $fsa_start + ((($trans >> 10) & 0x3FFFFF) << 2), 4));
 
                 if(0 == ($trans & 0x0100)) {
                     $result = false;
@@ -116,7 +116,7 @@ class phpMorphy_Fsa_Sparse_Mem extends phpMorphy_Fsa_FsaAbstract {
             if($i >= $c) {
                 $state = array_pop($stack);
                 $start_idx = array_pop($stack_idx);
-                $path = $GLOBALS['__phpmorphy_substr']($path, 0, -1);
+                $path = substr($path, 0, -1);
             }
         } while(!empty($stack));
 
@@ -131,7 +131,7 @@ class phpMorphy_Fsa_Sparse_Mem extends phpMorphy_Fsa_FsaAbstract {
         $start_offset = $fsa_start + (($index) << 2);
 
         // first try read annot transition
-                list(, $trans) = unpack('V', $GLOBALS['__phpmorphy_substr']($__mem, $start_offset, 4));
+                list(, $trans) = unpack('V', substr($__mem, $start_offset, 4));
 
         if(($trans & 0x0100)) {
             $result[] = $trans;
@@ -140,7 +140,7 @@ class phpMorphy_Fsa_Sparse_Mem extends phpMorphy_Fsa_FsaAbstract {
         // read rest
         $start_offset += 4;
         foreach($this->getAlphabetNum() as $char) {
-                        list(, $trans) = unpack('V', $GLOBALS['__phpmorphy_substr']($__mem, $start_offset + (($char) << 2), 4));
+                        list(, $trans) = unpack('V', substr($__mem, $start_offset + (($char) << 2), 4));
 
 //            if(!($trans & 0x0200) && ($trans & 0xFF) == $char) {
 // TODO: check term and empty flags at once i.e. $trans & 0x0300
@@ -172,7 +172,7 @@ class phpMorphy_Fsa_Sparse_Mem extends phpMorphy_Fsa_FsaAbstract {
     protected function readRootTrans() {
         $__mem = $this->resource; $fsa_start = $this->fsa_start;
 
-                list(, $trans) = unpack('V', $GLOBALS['__phpmorphy_substr']($__mem, $fsa_start + 4, 4));
+                list(, $trans) = unpack('V', substr($__mem, $fsa_start + 4, 4));
 
         return $trans;
     }
@@ -180,7 +180,7 @@ class phpMorphy_Fsa_Sparse_Mem extends phpMorphy_Fsa_FsaAbstract {
     protected function readAlphabet() {
         $__mem = $this->resource; $fsa_start = $this->fsa_start;
 
-                return $GLOBALS['__phpmorphy_substr']($__mem, $this->header['alphabet_offset'], $this->header['alphabet_size']);
+                return substr($__mem, $this->header['alphabet_offset'], $this->header['alphabet_size']);
     }
 
     function getAnnot($trans) {
@@ -194,10 +194,10 @@ class phpMorphy_Fsa_Sparse_Mem extends phpMorphy_Fsa_FsaAbstract {
             $this->header['annot_offset'] +
             ((($trans & 0xFF) << 22) | (($trans >> 10) & 0x3FFFFF));
 
-                $len = ord($GLOBALS['__phpmorphy_substr']($__mem, $offset, 1));
+                $len = ord(substr($__mem, $offset, 1));
 
         if($len) {
-            $annot = $GLOBALS['__phpmorphy_substr']($__mem, $offset + 1, $len);
+            $annot = substr($__mem, $offset + 1, $len);
         } else {
             $annot = null;
         }

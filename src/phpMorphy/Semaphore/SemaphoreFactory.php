@@ -29,7 +29,7 @@ abstract class phpMorphy_Semaphore_SemaphoreFactory {
      */
     static function create($key, $createEmpty = false) {
         if(!$createEmpty) {
-            if (0 == strcasecmp($GLOBALS['__phpmorphy_substr'](PHP_OS, 0, 3), 'WIN')) {
+            if (0 == strcasecmp(substr(PHP_OS, 0, 3), 'WIN')) {
                 return new phpMorphy_Semaphore_Win($key);
             } else {
                 return new phpMorphy_Semaphore_Nix($key);

@@ -56,7 +56,7 @@ abstract class phpMorphy_UnicodeHelper_UnicodeHelperAbstract implements phpMorph
      * @return phpMorphy_UnicodeHelper_UnicodeHelperInterface
      */
     static function getHelperForEncoding($encoding) {
-        $encoding = $GLOBALS['__phpmorphy_strtolower']($encoding);
+        $encoding = strtolower($encoding);
 
         if(!isset(self::$INSTANCES_CACHE[$encoding])) {
             self::$INSTANCES_CACHE[$encoding] = self::doCreate($encoding);;

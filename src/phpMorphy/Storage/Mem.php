@@ -24,11 +24,11 @@ class phpMorphy_Storage_Mem extends phpMorphy_Storage_StorageAbstract {
     function getType() { return phpMorphy_Storage_Factory::STORAGE_MEM; }
 
     function getFileSize() {
-        return $GLOBALS['__phpmorphy_strlen']($this->resource);
+        return strlen($this->resource);
     }
 
     function readUnsafe($offset, $len) {
-        return $GLOBALS['__phpmorphy_substr']($this->resource, $offset, $len);
+        return substr($this->resource, $offset, $len);
     }
 
     function open($fileName) {

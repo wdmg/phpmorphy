@@ -24,7 +24,7 @@ class phpMorphy_GrammemsProvider_Factory {
     protected static $included = array();
 
     static function create(phpMorphy_MorphyInterface $morphy) {
-        $locale = $GLOBALS['__phpmorphy_strtolower']($morphy->getLocale());
+        $locale = strtolower($morphy->getLocale());
 
         if(!isset(self::$included[$locale])) {
             $class = "phpMorphy_GrammemsProvider_$locale";

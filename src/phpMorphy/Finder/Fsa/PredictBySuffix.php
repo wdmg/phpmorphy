@@ -45,7 +45,7 @@ class phpMorphy_Finder_Fsa_PredictBySuffix extends phpMorphy_Finder_Fsa_Finder {
             $first_char_size = $this->unicode->getFirstCharSize($word);
             $skip_len += $first_char_size;
 
-            $word = $GLOBALS['__phpmorphy_substr']($word, $first_char_size);
+            $word = substr($word, $first_char_size);
 
             if(false !== ($result = parent::doFindWord($word))) {
                 break;
