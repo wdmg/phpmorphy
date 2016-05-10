@@ -10,6 +10,7 @@
             <directory suffix=".php">./src</directory>
             <exclude>
                 <directory suffix=".php">./vendor</directory>
+                <directory suffix=".php">./src/phpMorphy/Generator</directory>
             </exclude>
         </whitelist>
     </filter>
