@@ -3,6 +3,7 @@ phpMorphy (reloaded)
 
 [![Build Status](https://api.travis-ci.org/MAXakaWIZARD/phpmorphy.png?branch=master)](https://travis-ci.org/MAXakaWIZARD/phpmorphy)
 [![GitHub tag](https://img.shields.io/github/tag/MAXakaWIZARD/phpmorphy.svg?label=latest)](https://packagist.org/packages/maxakawizard/phpmorphy)
+[![Coverage Status](https://coveralls.io/repos/MAXakaWIZARD/phpmorphy/badge.svg?branch=master)](https://coveralls.io/r/MAXakaWIZARD/phpmorphy?branch=master)
 
 phpMorphy is morphological analyzer library for Russian, English and German languages.
 
