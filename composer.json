@@ -1,8 +1,8 @@
 {
-    "name": "maxakawizard/phpmorphy",
+    "name": "wdmg/phpmorphy",
     "description": "phpMorphy - morphological analyzer library for Russian, English and German languages",
     "keywords": ["phpMorphy"],
-    "homepage": "https://github.com/MAXakaWIZARD/phpmorphy",
+    "homepage": "https://github.com/wdmg/phpmorphy",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -14,6 +14,14 @@
         {
             "name": "Kamaev Vladimir",
             "email": "heromantor@users.sourceforge.net"
+        },
+        {
+          "name": "Alexsander Vyshnyvetskyy",
+          "email": "alex.vyshnyvetskyy@gmail.com"
+        },
+        {
+          "name": "W.D.M.Group, Ukraine",
+          "email": "wdmg.com.ua@gmail.com"
         }
     ],
     "autoload": {

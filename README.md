@@ -1,9 +1,9 @@
 phpMorphy (reloaded)
 ===================
 
-[![Build Status](https://api.travis-ci.org/MAXakaWIZARD/phpmorphy.png?branch=master)](https://travis-ci.org/MAXakaWIZARD/phpmorphy)
-[![GitHub tag](https://img.shields.io/github/tag/MAXakaWIZARD/phpmorphy.svg?label=latest)](https://packagist.org/packages/maxakawizard/phpmorphy)
-[![Coverage Status](https://coveralls.io/repos/MAXakaWIZARD/phpmorphy/badge.svg?branch=master)](https://coveralls.io/r/MAXakaWIZARD/phpmorphy?branch=master)
+[![Build Status](https://api.travis-ci.org/wdmg/phpmorphy.png?branch=master)](https://travis-ci.org/wdmg/phpmorphy)
+[![GitHub tag](https://img.shields.io/github/tag/wdmg/phpmorphy.svg?label=latest)](https://packagist.org/packages/wdmg/phpmorphy)
+[![Coverage Status](https://coveralls.io/repos/wdmg/phpmorphy/badge.svg?branch=master)](https://coveralls.io/r/wdmg/phpmorphy?branch=master)
 
 phpMorphy is morphological analyzer library for Russian, English and German languages.
 
@@ -23,7 +23,7 @@ config file:
 ```javascript
 {
     "require": {
-        "maxakawizard/phpmorphy": "~1.0"
+        "wdmg/phpmorphy": "~1.0"
     }
 }
 ```
