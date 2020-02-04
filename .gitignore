@@ -1,2 +1,4 @@
-.idea
-dicts/*/
+/vendor
+/build
+phpunit.xml
+composer.lock

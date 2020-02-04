@@ -55,7 +55,6 @@ class phpMorphy_FilesBundle {
      * @return void
      */
     function setLang($lang) {
-        //$this->lang = $GLOBALS['__phpmorphy_strtolower']($lang);
         $this->lang = strtolower($lang);
     }
 

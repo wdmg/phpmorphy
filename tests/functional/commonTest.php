@@ -1,22 +1,14 @@
 <?php
 class test_Functional_Common extends PHPUnit_Framework_TestCase {
-    protected
-        /**
-         * @var phpMorphy_MorphyInterface
-         */
-        $morphy;
+    /**
+     * @var phpMorphy_MorphyInterface
+     */
+    protected $morphy;
 
     function setUp() {
-        $opts = array(
-            'storage' => phpMorphy::STORAGE_FILE,
-            'predict_by_suffix' => true,
-            'predict_by_db' => true,
-        );
-        
         $this->morphy = new phpMorphy(
-            __DIR__ . '/../../dicts/utf-8',
-            'ru_RU',
-            $opts
+            null,
+            'ru_RU'
         );
     }
 
@@ -42,8 +34,7 @@ class test_Functional_Common extends PHPUnit_Framework_TestCase {
 
     function testNotSplitParadigms() {
         $paradigms = $this->morphy->findWord($this->toMorphyEncoding('айда'));
-
-        $this->assertEquals(1, count($paradigms));
+        $this->assertEquals(2, count($paradigms));
     }
 
     function testFindWord() {
@@ -73,6 +64,111 @@ class test_Functional_Common extends PHPUnit_Framework_TestCase {
         $paradigm = $paradigm[0];
 
         $this->assertEquals(2, count($paradigm->getFoundWordForm()));
+    }
+
+    /**
+     * @return array
+     */
+    public function providerBasic()
+    {
+        return array(
+            array(
+                'КОТ',
+                array('КОТ'),
+                array(
+                    'КОТ',
+                    'КОТА',
+                    'КОТУ',
+                    'КОТОМ',
+                    'КОТЕ',
+                    'КОТЫ',
+                    'КОТОВ',
+                    'КОТАМ',
+                    'КОТАМИ',
+                    'КОТАХ'
+                ),
+                array('КОТ'),
+            ),
+            array(
+                'СОБАКА',
+                array('СОБАКА'),
+                array(
+                    'СОБАКА',
+                    'СОБАКИ',
+                    'СОБАКЕ',
+                    'СОБАКУ',
+                    'СОБАКОЙ',
+                    'СОБАКОЮ',
+                    'СОБАК',
+                    'СОБАКАМ',
+                    'СОБАКАМИ',
+                    'СОБАКАХ'
+                ),
+                array('СОБАК'),
+            ),
+            array(
+                'кот',
+                false,
+                false,
+                false,
+            ),
+            array(
+                array('кот', 'собака'),
+                array('кот' => false, 'собака' => false),
+                array('кот' => false, 'собака' => false),
+                array('кот' => false, 'собака' => false),
+            ),
+            array(
+                array('КОТ', 'СОБАКА'),
+                array('КОТ' => array('КОТ'), 'СОБАКА' => array('СОБАКА')),
+                array(
+                    'КОТ' => array(
+                        'КОТ',
+                        'КОТА',
+                        'КОТУ',
+                        'КОТОМ',
+                        'КОТЕ',
+                        'КОТЫ',
+                        'КОТОВ',
+                        'КОТАМ',
+                        'КОТАМИ',
+                        'КОТАХ'
+                    ),
+                    'СОБАКА' => array(
+                        'СОБАКА',
+                        'СОБАКИ',
+                        'СОБАКЕ',
+                        'СОБАКУ',
+                        'СОБАКОЙ',
+                        'СОБАКОЮ',
+                        'СОБАК',
+                        'СОБАКАМ',
+                        'СОБАКАМИ',
+                        'СОБАКАХ'
+                    )
+                ),
+                array('КОТ' => array('КОТ'), 'СОБАКА' => array('СОБАК')),
+            )
+        );
+    }
+
+    /**
+     * @dataProvider providerBasic
+     * @param string|array $word
+     * @param mixed $expectedBaseForm
+     * @param mixed $expectedAllForms
+     * @param mixed $expectedPseudoRoot
+     */
+    public function testBasic($word, $expectedBaseForm, $expectedAllForms, $expectedPseudoRoot)
+    {
+        $baseForm = $this->morphy->getBaseForm($word);
+        $this->assertEquals($expectedBaseForm, $baseForm);
+
+	    $allForms = $this->morphy->getAllForms($word);
+        $this->assertEquals($expectedAllForms, $allForms);
+
+	    $pseudoRoot = $this->morphy->getPseudoRoot($word);
+        $this->assertEquals($expectedPseudoRoot, $pseudoRoot);
     }
 
     protected function toMorphyEncoding($string) {

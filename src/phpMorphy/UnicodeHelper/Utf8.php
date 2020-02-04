@@ -50,10 +50,10 @@ class phpMorphy_UnicodeHelper_Utf8 extends phpMorphy_UnicodeHelper_UnicodeHelper
         /*
         $result = array();
 
-        for($i = 0, $c = $GLOBALS['__phpmorphy_strlen']($str); $i < $c;) {
+        for($i = 0, $c = strlen($str); $i < $c;) {
             $len = 1 + $this->tails_length[ord($str[$i])];
 
-            $result[] = $GLOBALS['__phpmorphy_substr']($str, $i, $len);
+            $result[] = substr($str, $i, $len);
 
             $i += $len;
         }
@@ -63,7 +63,7 @@ class phpMorphy_UnicodeHelper_Utf8 extends phpMorphy_UnicodeHelper_UnicodeHelper
     }
 
     function clearIncompleteCharsAtEnd($str) {
-        $strlen = $GLOBALS['__phpmorphy_strlen']($str);
+        $strlen = strlen($str);
 
         if(!$strlen) {
             return '';
@@ -85,7 +85,7 @@ class phpMorphy_UnicodeHelper_Utf8 extends phpMorphy_UnicodeHelper_UnicodeHelper
                 $miss = $seq_len - $diff;
 
                 if($miss) {
-                    return $GLOBALS['__phpmorphy_substr']($str, 0, -($seq_len - $miss));
+                    return substr($str, 0, -($seq_len - $miss));
                 } else {
                     return $str;
                 }

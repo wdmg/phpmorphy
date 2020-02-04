@@ -30,7 +30,7 @@ class phpMorphy_GramInfo_Mem extends phpMorphy_GramInfo_GramInfoAbstract {
 
         $result = unpack(
             'vid/vfreq/vforms_count/vpacked_forms_count/vancodes_count/vancodes_offset/vancodes_map_offset/vaffixes_offset/vaffixes_size/vbase_size',
-            $GLOBALS['__phpmorphy_substr']($__mem, $offset, 20)        );
+            substr($__mem, $offset, 20)        );
 
         $result['offset'] = $offset;
 
@@ -45,7 +45,7 @@ class phpMorphy_GramInfo_Mem extends phpMorphy_GramInfo_GramInfoAbstract {
 
 
         $forms_count = $info['packed_forms_count'];
-        return unpack("v$forms_count",  $GLOBALS['__phpmorphy_substr']($__mem, $offset, $forms_count * 2));
+        return unpack("v$forms_count",  substr($__mem, $offset, $forms_count * 2));
     }
 
     protected function splitAncodes($ancodes, $map) {
@@ -71,7 +71,7 @@ class phpMorphy_GramInfo_Mem extends phpMorphy_GramInfo_GramInfoAbstract {
 
 
         $forms_count = $info['forms_count'];
-        $ancodes = unpack("v$forms_count", $GLOBALS['__phpmorphy_substr']($__mem, $offset, $forms_count * 2));
+        $ancodes = unpack("v$forms_count", substr($__mem, $offset, $forms_count * 2));
 
         /*
         if(!$expand) {
@@ -95,7 +95,7 @@ class phpMorphy_GramInfo_Mem extends phpMorphy_GramInfo_GramInfoAbstract {
             $offset += $info['forms_count'] * 2 + $info['packed_forms_count'] * 2;
         }
 
-                return explode($this->ends, $GLOBALS['__phpmorphy_substr']($__mem, $offset, $info['affixes_size'] - $this->ends_size));
+                return explode($this->ends, substr($__mem, $offset, $info['affixes_size'] - $this->ends_size));
     }
 
     function readAllGramInfoOffsets() {
@@ -106,7 +106,7 @@ class phpMorphy_GramInfo_Mem extends phpMorphy_GramInfo_GramInfoAbstract {
         $__mem = $this->resource;
 
 
-        return array_values(unpack("V$count", $GLOBALS['__phpmorphy_substr']($__mem, $offset, $count * 4)));
+        return array_values(unpack("V$count", substr($__mem, $offset, $count * 4)));
     }
 
     function readAllFlexia() {
@@ -144,11 +144,11 @@ class phpMorphy_GramInfo_Mem extends phpMorphy_GramInfo_GramInfoAbstract {
 
             $res = unpack(
                 'vid/Cis_predict',
-                $GLOBALS['__phpmorphy_substr']($__mem, $offset, 3)            );
+                substr($__mem, $offset, 3)            );
 
             $result[$res['id']] = array(
                 'is_predict' => (bool)$res['is_predict'],
-                'name' => $this->cleanupCString($GLOBALS['__phpmorphy_substr']($__mem, $offset + 3, $size - 3))
+                'name' => $this->cleanupCString(substr($__mem, $offset + 3, $size - 3))
             );
 
             $offset += $size;
@@ -168,12 +168,12 @@ class phpMorphy_GramInfo_Mem extends phpMorphy_GramInfo_GramInfoAbstract {
 
             $res = unpack(
                 'vid/Cshift',
-                $GLOBALS['__phpmorphy_substr']($__mem, $offset, 3)            );
+                substr($__mem, $offset, 3)            );
 
             $result[$res['id']] = array(
                 'shift' => $res['shift'],
 
-                'name' => $this->cleanupCString($GLOBALS['__phpmorphy_substr']($__mem, $offset + 3, $size - 3))
+                'name' => $this->cleanupCString(substr($__mem, $offset + 3, $size - 3))
             );
 
             $offset += $size;
@@ -190,16 +190,16 @@ class phpMorphy_GramInfo_Mem extends phpMorphy_GramInfo_GramInfoAbstract {
         $offset = $this->header['ancodes_offset'];
 
         for($i = 0; $i < $this->header['ancodes_count']; $i++) {
-            $res = unpack('vid/vpos_id', $GLOBALS['__phpmorphy_substr']($__mem, $offset, 4));
+            $res = unpack('vid/vpos_id', substr($__mem, $offset, 4));
             $offset += 4;
 
-            list(, $grammems_count) = unpack('v', $GLOBALS['__phpmorphy_substr']($__mem, $offset, 2));
+            list(, $grammems_count) = unpack('v', substr($__mem, $offset, 2));
             $offset += 2;
 
             $result[$res['id']] = array(
                 'pos_id' => $res['pos_id'],
                 'grammem_ids' => $grammems_count ?
-                    array_values(unpack("v$grammems_count", $GLOBALS['__phpmorphy_substr']($__mem, $offset, $grammems_count * 2))) :
+                    array_values(unpack("v$grammems_count", substr($__mem, $offset, $grammems_count * 2))) :
                     array(),
                 'offset' => $offset,
             );

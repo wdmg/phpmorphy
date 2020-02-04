@@ -52,7 +52,7 @@ class phpMorphy_Finder_Fsa_PredictByDatabase extends phpMorphy_Finder_Fsa_Finder
         if($result['result'] && null !== $result['annot']) {
             $annots = $result['annot'];
         } else {
-            $match_len = $this->unicode->strlen($this->unicode->clearIncompleteCharsAtEnd($GLOBALS['__phpmorphy_substr']($rev_word, 0, $result['walked'])));
+            $match_len = $this->unicode->strlen($this->unicode->clearIncompleteCharsAtEnd(substr($rev_word, 0, $result['walked'])));
 
             if(null === ($annots = $this->determineAnnots($result['last_trans'], $match_len))) {
                 return false;
@@ -97,11 +97,11 @@ class phpMorphy_Finder_Fsa_PredictByDatabase extends phpMorphy_Finder_Fsa_Finder
             $prefix = $flexias[$annot['form_no'] * 2];
             $suffix = $flexias[$annot['form_no'] * 2 + 1];
 
-            $plen = $GLOBALS['__phpmorphy_strlen']($prefix);
-            $slen = $GLOBALS['__phpmorphy_strlen']($suffix);
+            $plen = strlen($prefix);
+            $slen = strlen($suffix);
             if(
-                (!$plen || $GLOBALS['__phpmorphy_substr']($word, 0, $GLOBALS['__phpmorphy_strlen']($prefix)) === $prefix) &&
-                (!$slen || $GLOBALS['__phpmorphy_substr']($word, -$GLOBALS['__phpmorphy_strlen']($suffix)) === $suffix)
+                (!$plen || substr($word, 0, strlen($prefix)) === $prefix) &&
+                (!$slen || substr($word, -strlen($suffix)) === $suffix)
             ) {
                 $result[] = $annot;
             }

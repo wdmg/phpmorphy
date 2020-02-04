@@ -48,7 +48,7 @@ class <?php echo $helper->getClassName() ?> extends <?php echo $helper->getParen
     function walk($trans, $word, $readAnnot = true) {
         <?php echo $helper->prolog() ?>;
         
-        for($i = 0, $c = $GLOBALS['__phpmorphy_strlen']($word); $i < $c; $i++) {
+        for($i = 0, $c = strlen($word); $i < $c; $i++) {
             $prev_trans = $trans;
             $char = ord($word[$i]);
             
@@ -135,7 +135,7 @@ class <?php echo $helper->getClassName() ?> extends <?php echo $helper->getParen
             if($i >= $c) {
                 $state = array_pop($stack);
                 $start_idx = array_pop($stack_idx);
-                $path = $GLOBALS['__phpmorphy_substr']($path, 0, -1);
+                $path = substr($path, 0, -1);
             }
         } while(!empty($stack));
         

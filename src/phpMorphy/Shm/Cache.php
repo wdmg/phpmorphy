@@ -374,7 +374,7 @@ class phpMorphy_Shm_Cache implements phpMorphy_Shm_CacheInterface {
     protected function writeHeader($shmId, phpMorphy_Shm_Header $header) {
         $data = serialize($header);
 
-        if($GLOBALS['__phpmorphy_strlen']($data) > $this->getFilesOffset()) {
+        if(strlen($data) > $this->getFilesOffset()) {
             throw new phpMorphy_Exception("Too long header, try increase SHM_HEADER_MAX_SIZE");
         }
 

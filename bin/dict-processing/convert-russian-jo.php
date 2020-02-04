@@ -1,7 +1,5 @@
 #!/usr/bin/env php
 <?php
-//set_include_path(__DIR__ . '/../../src/' . PATH_SEPARATOR . get_include_path());
-//require('phpMorphy.php');
 
 $search =  array('Ё', 'ё');
 $replace = array('Е', 'е');

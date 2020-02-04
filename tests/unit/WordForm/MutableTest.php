@@ -74,7 +74,7 @@ class test_WordForm_Mutable extends PHPUnit_Framework_TestCase
             }
         }
 
-        $new_form = new phpMorphy_WordForm_WordForm($form->getParadigm());
+        $new_form = new phpMorphy_WordForm_WordForm();
         $new_form->assignFromWordForm($form);
 
         foreach($methods as $set_method) {
@@ -105,4 +105,3 @@ class test_WordForm_Mutable extends PHPUnit_Framework_TestCase
         );
     }
 }
-?>

@@ -38,16 +38,16 @@ class phpMorphy_UnicodeHelper_MultiByteFixed extends phpMorphy_UnicodeHelper_Uni
     }
 
     protected function strlenImpl($str) {
-        return $GLOBALS['__phpmorphy_strlen']($str) / $this->char_size;
+        return strlen($str) / $this->char_size;
     }
 
     function clearIncompleteCharsAtEnd($str) {
-        $len = $GLOBALS['__phpmorphy_strlen']($str);
+        $len = strlen($str);
         $mod = $len % $this->char_size;
 
         if($mod > 0) {
-            //return $GLOBALS['__phpmorphy_substr']($str, 0, floor($len / $this->size) * $this->size);
-            return $GLOBALS['__phpmorphy_substr']($str, 0, $len - $mod);
+            //return substr($str, 0, floor($len / $this->size) * $this->size);
+            return substr($str, 0, $len - $mod);
         }
 
         return $str;

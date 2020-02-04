@@ -24,7 +24,7 @@ class phpMorphy_Fsa_Tree_Mem extends phpMorphy_Fsa_FsaAbstract {
     function walk($trans, $word, $readAnnot = true) {
         $__mem = $this->resource; $fsa_start = $this->fsa_start;
 
-        for($i = 0, $c = $GLOBALS['__phpmorphy_strlen']($word); $i < $c; $i++) {
+        for($i = 0, $c = strlen($word); $i < $c; $i++) {
             $prev_trans = $trans;
             $char = ord($word[$i]);
 
@@ -35,7 +35,7 @@ class phpMorphy_Fsa_Tree_Mem extends phpMorphy_Fsa_FsaAbstract {
 			$start_offset = $fsa_start + ((($trans >> 11) & 0x1FFFFF) << 2);
 
 			// read first trans in state
-						list(, $trans) = unpack('V', $GLOBALS['__phpmorphy_substr']($__mem, $start_offset, 4));
+						list(, $trans) = unpack('V', substr($__mem, $start_offset, 4));
 
 			// If first trans is term(i.e. pointing to annot) then skip it
 			if(($trans & 0x0100)) {
@@ -44,7 +44,7 @@ class phpMorphy_Fsa_Tree_Mem extends phpMorphy_Fsa_FsaAbstract {
 					$result = false;
 				} else {
 					$start_offset += 4;
-										list(, $trans) = unpack('V', $GLOBALS['__phpmorphy_substr']($__mem, $start_offset, 4));
+										list(, $trans) = unpack('V', substr($__mem, $start_offset, 4));
 				}
 			}
 
@@ -78,7 +78,7 @@ class phpMorphy_Fsa_Tree_Mem extends phpMorphy_Fsa_FsaAbstract {
 					}
 
 										// read next trans
-										list(, $trans) = unpack('V', $GLOBALS['__phpmorphy_substr']($__mem, $start_offset + (($idx - 1) << 2), 4));
+										list(, $trans) = unpack('V', substr($__mem, $start_offset + (($idx - 1) << 2), 4));
 				}
 			}
 
@@ -101,7 +101,7 @@ class phpMorphy_Fsa_Tree_Mem extends phpMorphy_Fsa_FsaAbstract {
 
             if($readAnnot) {
                 // read annot trans
-                                list(, $trans) = unpack('V', $GLOBALS['__phpmorphy_substr']($__mem, $fsa_start + ((($trans >> 11) & 0x1FFFFF) << 2), 4));
+                                list(, $trans) = unpack('V', substr($__mem, $fsa_start + ((($trans >> 11) & 0x1FFFFF) << 2), 4));
 
                 if(0 == ($trans & 0x0100)) {
                     $result = false;
@@ -161,7 +161,7 @@ class phpMorphy_Fsa_Tree_Mem extends phpMorphy_Fsa_FsaAbstract {
             if($i >= $c) {
                 $state = array_pop($stack);
                 $start_idx = array_pop($stack_idx);
-                $path = $GLOBALS['__phpmorphy_substr']($path, 0, -1);
+                $path = substr($path, 0, -1);
             }
         } while(!empty($stack));
 
@@ -176,13 +176,13 @@ class phpMorphy_Fsa_Tree_Mem extends phpMorphy_Fsa_FsaAbstract {
 		$offset = $fsa_start + (($index) << 2);
 
 		// read first trans
-				list(, $trans) = unpack('V', $GLOBALS['__phpmorphy_substr']($__mem, $offset, 4));
+				list(, $trans) = unpack('V', substr($__mem, $offset, 4));
 
 		// check if first trans is pointer to annot, and not single in state
 		if(($trans & 0x0100) && !(($trans & 0x0200) || ($trans & 0x0400))) {
 			$result[] = $trans;
 
-			list(, $trans) = unpack('V', $GLOBALS['__phpmorphy_substr']($__mem, $offset, 4));
+			list(, $trans) = unpack('V', substr($__mem, $offset, 4));
 			$offset += 4;
 		}
 
@@ -194,7 +194,7 @@ class phpMorphy_Fsa_Tree_Mem extends phpMorphy_Fsa_FsaAbstract {
 			$result[] = $trans;
 
 			if($expect > 1) {
-				list(, $trans) = unpack('V', $GLOBALS['__phpmorphy_substr']($__mem, $offset, 4));
+				list(, $trans) = unpack('V', substr($__mem, $offset, 4));
 				$offset += 4;
 			}
 		}
@@ -222,7 +222,7 @@ class phpMorphy_Fsa_Tree_Mem extends phpMorphy_Fsa_FsaAbstract {
     protected function readRootTrans() {
         $__mem = $this->resource; $fsa_start = $this->fsa_start;
 
-                list(, $trans) = unpack('V', $GLOBALS['__phpmorphy_substr']($__mem, $fsa_start + 0, 4));
+                list(, $trans) = unpack('V', substr($__mem, $fsa_start + 0, 4));
 
         return $trans;
     }
@@ -230,7 +230,7 @@ class phpMorphy_Fsa_Tree_Mem extends phpMorphy_Fsa_FsaAbstract {
     protected function readAlphabet() {
         $__mem = $this->resource; $fsa_start = $this->fsa_start;
 
-                return $GLOBALS['__phpmorphy_substr']($__mem, $this->header['alphabet_offset'], $this->header['alphabet_size']);
+                return substr($__mem, $this->header['alphabet_offset'], $this->header['alphabet_size']);
     }
 
     function getAnnot($trans) {
@@ -244,10 +244,10 @@ class phpMorphy_Fsa_Tree_Mem extends phpMorphy_Fsa_FsaAbstract {
             $this->header['annot_offset'] +
             ((($trans & 0xFF) << 21) | (($trans >> 11) & 0x1FFFFF));
 
-                $len = ord($GLOBALS['__phpmorphy_substr']($__mem, $offset, 1));
+                $len = ord(substr($__mem, $offset, 1));
 
         if($len) {
-            $annot = $GLOBALS['__phpmorphy_substr']($__mem, $offset + 1, $len);
+            $annot = substr($__mem, $offset + 1, $len);
         } else {
             $annot = null;
         }

@@ -99,7 +99,7 @@ class phpMorphy_Paradigm_ArrayBased
 
     /**
      * Returns all unique word forms for this paradigm
-     * @return void
+     * @return array
      */
     function getAllForms() {
         $result = array();

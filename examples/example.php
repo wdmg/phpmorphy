@@ -2,15 +2,17 @@
 error_reporting(E_ALL | E_STRICT);
 
 // first we include phpmorphy library
-require_once(__DIR__ . '/../src/common.php');
+require_once(__DIR__ . '/../vendor/autoload.php');
 
 // set some options
 $opts = array(
 	// storage type, follow types supported
-	// PHPMORPHY_STORAGE_FILE - use file operations(fread, fseek) for dictionary access, this is very slow...
-	// PHPMORPHY_STORAGE_SHM - load dictionary in shared memory(using shmop php extension), this is preferred mode
-	// PHPMORPHY_STORAGE_MEM - load dict to memory each time when phpMorphy intialized, this useful when shmop ext. not activated. Speed same as for PHPMORPHY_STORAGE_SHM type
-	'storage' => PHPMORPHY_STORAGE_FILE,
+	// phpMorphy::STORAGE_FILE - use file operations(fread, fseek) for dictionary access, this is very slow...
+	// phpMorphy::STORAGE_SHM - load dictionary in shared memory(using shmop php extension), this is preferred mode
+	// phpMorphy::STORAGE_MEM - load dict to memory each time when phpMorphy intialized,
+	// this is useful when shmop ext is not activated.
+	// Speed same as for phpMorphy::STORAGE_SHM type
+	'storage' => phpMorphy::STORAGE_FILE,
 	// Extend graminfo for getAllFormsWithGramInfo method call
 	'with_gramtab' => false,
 	// Enable prediction by suffix
@@ -19,15 +21,10 @@ $opts = array(
 	'predict_by_db' => true
 );
 
-// Path to directory where dictionaries located
-$dir = __DIR__ . '/../dicts';
-
-// Create descriptor for dictionary located in $dir directory with russian language
-$dict_bundle = new phpMorphy_FilesBundle($dir, 'rus');
-
 // Create phpMorphy instance
 try {
-	$morphy = new phpMorphy($dict_bundle, $opts);
+	$morphy = new phpMorphy(null, 'ru_RU', $opts);
+	//$morphy = new phpMorphy(new phpMorphy_FilesBundle(phpMorphy::getDefaultDictsDir(), 'ru_RU'), $opts);
 } catch(phpMorphy_Exception $e) {
 	die('Error occured while creating phpMorphy instance: ' . $e->getMessage());
 }
@@ -47,8 +44,8 @@ try {
 // setlocale(LC_CTYPE, array('ru_RU.CP1251', 'Russian_Russia.1251'));
 
 // Hint: in this example words $word_one, $word_two are in russian language(cp1251 encoding)
-$word_one = '��������';
-$word_two = '���������������';
+$word_one = 'КОТ';
+$word_two = 'СОБАКА';
 
 echo "Testing single mode...\n";
 

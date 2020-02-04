@@ -81,7 +81,7 @@ abstract class phpMorphy_AnnotDecoder_AnnotDecoderAbstract implements phpMorphy_
 
         if($count > 1) {
             for($i = 0; $i < $count - 1; $i++) {
-                $res = unpack($unpack_str, $GLOBALS['__phpmorphy_substr']($annotRaw, 4 + ($i + 1) * $unpack_size, $unpack_size));
+                $res = unpack($unpack_str, substr($annotRaw, 4 + ($i + 1) * $unpack_size, $unpack_size));
 
                 if($res['common_ancode'] == self::INVALID_ANCODE_ID) {
                     $res['common_ancode'] = null;
@@ -92,7 +92,7 @@ abstract class phpMorphy_AnnotDecoder_AnnotDecoderAbstract implements phpMorphy_
         }
 
         if($withBase) {
-            $items = explode($this->end_of_string, $GLOBALS['__phpmorphy_substr']($annotRaw, 4 + $count * $unpack_size));
+            $items = explode($this->end_of_string, substr($annotRaw, 4 + $count * $unpack_size));
             for($i = 0; $i < $count; $i++) {
                 $result[$i]['base_prefix'] = $items[$i * 2];
                 $result[$i]['base_suffix'] = $items[$i * 2 + 1];

@@ -41,13 +41,11 @@ class phpMorphy_WordForm_WordForm implements phpMorphy_WordForm_WordFormInterfac
     /**
      * @param phpMorphy_WordForm_WordForm|array $data
      */
-    function __construct($data) {
-        if(is_array($data)) {
+    function __construct($data = array()) {
+        if (is_array($data) && !empty($data)) {
             $this->assigmFromArray($data);
-        } else if($data instanceof phpMorphy_WordForm_WordForm) {
+        } else if ($data instanceof phpMorphy_WordForm_WordForm) {
             $this->assignFromWordForm($data);
-        } else {
-            throw new phpMorphy_Exception("Can`t initialize word form from '$type' type");
         }
     }
 

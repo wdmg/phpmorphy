@@ -1,7 +1,6 @@
 #!/usr/bin/env php
 <?php
-set_include_path(__DIR__ . '/../../src/' . PATH_SEPARATOR . get_include_path());
-require('phpMorphy.php');
+require_once(__DIR__ . '/../init.php');
 
 if($argc < 3) {
     echo "Usage " . $argv[0] . " MORPH_DATA_FILE OUT_DIR";
@@ -13,7 +12,7 @@ $out_dir = $argv[2];
 
 try {
     $factory = new phpMorphy_Storage_Factory();
-    $graminfo = phpMorphy_GramInfo_GramInfoAbstract::create($factory->create(PHPMORPHY_STORAGE_FILE, $file, false), false);
+    $graminfo = phpMorphy_GramInfo_GramInfoAbstract::create($factory->create(phpMorphy::STORAGE_FILE, $file, false), false);
     
     $out_file = $out_dir . '/morph_data_header_cache.' . strtolower($graminfo->getLocale()) . '.bin';
     

@@ -126,18 +126,6 @@ class phpMorphy_GramTab_GramTab implements phpMorphy_GramTab_GramTabInterface {
     }
 
     /**
-     * @return void
-     */
-    function includeConsts() {
-        static $is_included = false;
-
-        if(!$is_included) {
-            require_once(__DIR__ . '/gramtab_consts.php');
-            $is_included = true;
-        }
-    }
-
-    /**
      * @param string $ancodeId
      * @param string $commonAncode
      * @return string

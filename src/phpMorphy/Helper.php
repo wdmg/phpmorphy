@@ -32,8 +32,6 @@ class phpMorphy_Helper {
         $gramtab,
         /** @var phpMorphy_AncodesResolver_AncodesResolverInterface */
         $ancodes_resolver,
-        /** @var  bool */
-        $gramtab_consts_included = false,
         /** @var bool */
         $is_resolve_pos;
 
@@ -112,20 +110,8 @@ class phpMorphy_Helper {
         }
     }
 
-    protected function includeGramTabConsts() {
-        if($this->isResolvePartOfSpeech()) {
-            $this->gramtab->includeConsts();
-        }
-
-        $this->gramtab_consts_included = true;
-    }
-
     // getters
     function getParadigmCollection($word, $annots) {
-        if(!$this->gramtab_consts_included) {
-            $this->includeGramTabConsts();
-        }
-
         $collection = new phpMorphy_Paradigm_Collection();
 
         if(false !== $annots) {
@@ -141,16 +127,16 @@ class phpMorphy_Helper {
 
     protected function getBaseAndPrefix($word, $cplen, $plen, $flen) {
         if($flen) {
-            $base = $GLOBALS['__phpmorphy_substr']($word, $cplen + $plen, -$flen);
+            $base = substr($word, $cplen + $plen, -$flen);
         } else {
             if($cplen || $plen) {
-                $base = $GLOBALS['__phpmorphy_substr']($word, $cplen + $plen);
+                $base = substr($word, $cplen + $plen);
             } else {
                 $base = $word;
             }
         }
 
-        $prefix = $cplen ? $GLOBALS['__phpmorphy_substr']($word, 0, $cplen) : '';
+        $prefix = $cplen ? substr($word, 0, $cplen) : '';
 
         return array($base, $prefix);
     }

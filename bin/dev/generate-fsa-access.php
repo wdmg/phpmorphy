@@ -1,12 +1,9 @@
 #!/usr/bin/env php
 <?php
-set_include_path(__DIR__ . '/../../src/' . PATH_SEPARATOR . get_include_path());
-require('phpMorphy.php');
-
-$morphy_dir = PHPMORPHY_DIR;
+require_once(__DIR__ . '/../init.php');
 
 try {
-    phpMorphy_Generator_Fsa::generate($morphy_dir);
+    phpMorphy_Generator_Fsa::generate(PHPMORPHY_DIR);
 } catch (Exception $e) {
     echo $e;
     exit(1);

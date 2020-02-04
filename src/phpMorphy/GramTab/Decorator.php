@@ -157,15 +157,6 @@ abstract class phpMorphy_GramTab_Decorator implements phpMorphy_GramTab_GramTabI
 
     /**
     * @abstract
-    * @return void
-    */
-    public function includeConsts() {
-        $result = $this->object->includeConsts();
-        return $result === $this->object ? $this : $result;
-    }
-
-    /**
-    * @abstract
     * @param string|int $ancodeId
     * @param string|int $commonAncode
     * @return string|int

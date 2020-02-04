@@ -2,13 +2,11 @@
 <?php
 error_reporting(E_ALL | E_STRICT);
 
-define('REMOVE_DUPLICATES', true);
-define('PATH_TO_MYSTEM', __DIR__ . '/../../mystem/mystem');
-define('DICTS_DIR', __DIR__ . '/../dicts');
-define('MORPHY_2X_DIR', __DIR__ . '/../../phpmorphy-php-2.5');
-define('MORPHY_2X_DICTS_DIR', MORPHY_2X_DIR . '/dicts');
+require_once(__DIR__ . '/init.php');
 
-if($argc < 2) {
+define('REMOVE_DUPLICATES', true);
+
+if ($argc < 2) {
     die("Usage {$argv[0]} TEXT_FILE [ENCODING] [FILE_ENCODING]" . PHP_EOL);
 }
 
@@ -16,17 +14,9 @@ $cwd = getcwd();
 $text_file = $argv[1];
 $encoding = $argc > 2 ? $argv[2] : 'utf-8';
 $file_encoding = $argc > 3 ? $argv[3] : 'utf-8';
-$lang = 'rus';
+$lang = 'ru_RU';
 
-$morphy_ver = getenv('PHPMORPHY_VER');
-if($morphy_ver !== "0.2") {
-    set_include_path(__DIR__ . '/../src/' . PATH_SEPARATOR . get_include_path());
-    require('phpMorphy.php');
-} else {
-    require_once(MORPHY_2X_DIR . '/src/common.php');
-}
-
-$dict_dir = PHPMORPHY_DIR . '/../dicts/' . $encoding;
+$dict_dir = phpMorphy::getDefaultDictsDir($encoding);
 
 $words = load_words($text_file, REMOVE_DUPLICATES, $encoding, $file_encoding);
 
@@ -39,19 +29,19 @@ bench_porter($words, $encoding);
 //bench_pspell($words);
 
 //print_memory_usage();
-bench_morphy_dict($words, $encoding, $dict_dir, $lang, PHPMORPHY_STORAGE_FILE);
-bench_morphy_dict($words, $encoding, $dict_dir, $lang, PHPMORPHY_STORAGE_SHM);
-bench_morphy_dict($words, $encoding, $dict_dir, $lang, PHPMORPHY_STORAGE_MEM);
+bench_morphy_dict($words, $encoding, $dict_dir, $lang, phpMorphy::STORAGE_FILE);
+bench_morphy_dict($words, $encoding, $dict_dir, $lang, phpMorphy::STORAGE_SHM);
+bench_morphy_dict($words, $encoding, $dict_dir, $lang, phpMorphy::STORAGE_MEM);
 
-bench_morphy($words, $encoding, $dict_dir, $lang, PHPMORPHY_STORAGE_FILE, false);
-bench_morphy($words, $encoding, $dict_dir, $lang, PHPMORPHY_STORAGE_FILE, true);
+bench_morphy($words, $encoding, $dict_dir, $lang, phpMorphy::STORAGE_FILE, false);
+bench_morphy($words, $encoding, $dict_dir, $lang, phpMorphy::STORAGE_FILE, true);
 
-bench_morphy($words, $encoding, $dict_dir, $lang, PHPMORPHY_STORAGE_SHM, false);
-bench_morphy($words, $encoding, $dict_dir, $lang, PHPMORPHY_STORAGE_SHM, true);
+bench_morphy($words, $encoding, $dict_dir, $lang, phpMorphy::STORAGE_SHM, false);
+bench_morphy($words, $encoding, $dict_dir, $lang, phpMorphy::STORAGE_SHM, true);
 
 //print_memory_usage();
-bench_morphy($words, $encoding, $dict_dir, $lang, PHPMORPHY_STORAGE_MEM, false);
-bench_morphy($words, $encoding, $dict_dir, $lang, PHPMORPHY_STORAGE_MEM, true);
+bench_morphy($words, $encoding, $dict_dir, $lang, phpMorphy::STORAGE_MEM, false);
+bench_morphy($words, $encoding, $dict_dir, $lang, phpMorphy::STORAGE_MEM, true);
 
 //file_put_contents(__DIR__ . '/.bench.words.txt', implode(PHP_EOL, $words));
 print_memory_usage();
@@ -101,7 +91,12 @@ function bench_enchant($words) {
     }
     $e = microtime(true);
     
-    printf("time = %0.2f sec, words per second = %0.2f, not found = %d\n", $e - $b, count($words) / ($e - $b), $not_found);
+    printf(
+        "time = %0.2f sec, words per second = %0.2f, not found = %d\n",
+        $e - $b,
+        count($words) / ($e - $b),
+        $not_found
+    );
     
 	enchant_broker_free_dict($d);
 	
@@ -204,7 +199,7 @@ function bench_porter($words, $encoding) {
     $stemmer = new Lingua_Stem_Ru($encoding, true);
 
     $b = microtime(true);
-    foreach($words as $word) {
+    foreach ($words as $word) {
         $lemma = $stemmer->stem_word($word);
         //var_dump($word, $lemma);
     }

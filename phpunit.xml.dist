@@ -1,0 +1,17 @@
+<phpunit bootstrap="./tests/bootstrap.php" colors="true">
+    <testsuite name="Functional">
+        <directory>./tests/functional</directory>
+    </testsuite>
+    <testsuite name="Unit">
+        <directory>./tests/unit</directory>
+    </testsuite>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+            <exclude>
+                <directory suffix=".php">./vendor</directory>
+                <directory suffix=".php">./src/phpMorphy/Generator</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

@@ -42,7 +42,7 @@ abstract class phpMorphy_GramInfo_GramInfoAbstract implements phpMorphy_GramInfo
         $this->header = $header;
 
         $this->ends = str_repeat("\0", $header['char_size'] + 1);
-        $this->ends_size = $GLOBALS['__phpmorphy_strlen']($this->ends);
+        $this->ends_size = strlen($this->ends);
     }
 
     /**
@@ -130,13 +130,13 @@ abstract class phpMorphy_GramInfo_GramInfoAbstract implements phpMorphy_GramInfo
         );
 
         $offset = 24 * 4;
-        $len = ord($GLOBALS['__phpmorphy_substr']($headerRaw, $offset++, 1));
-        $header['lang'] = rtrim($GLOBALS['__phpmorphy_substr']($headerRaw, $offset, $len));
+        $len = ord(substr($headerRaw, $offset++, 1));
+        $header['lang'] = rtrim(substr($headerRaw, $offset, $len));
 
         $offset += $len;
 
-        $len = ord($GLOBALS['__phpmorphy_substr']($headerRaw, $offset++, 1));
-        $header['encoding'] = rtrim($GLOBALS['__phpmorphy_substr']($headerRaw, $offset, $len));
+        $len = ord(substr($headerRaw, $offset++, 1));
+        $header['encoding'] = rtrim(substr($headerRaw, $offset, $len));
 
         return $header;
     }
@@ -162,8 +162,8 @@ abstract class phpMorphy_GramInfo_GramInfoAbstract implements phpMorphy_GramInfo
      * @return string
      */
     protected function cleanupCString($string) {
-        if(false !== ($pos = $GLOBALS['__phpmorphy_strpos']($string, $this->ends))) {
-            $string = $GLOBALS['__phpmorphy_substr']($string, 0, $pos);
+        if(false !== ($pos = strpos($string, $this->ends))) {
+            $string = substr($string, 0, $pos);
         }
 
         return $string;

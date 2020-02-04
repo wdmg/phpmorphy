@@ -39,7 +39,7 @@ class phpMorphy_UnicodeHelper_Utf16 extends phpMorphy_UnicodeHelper_UnicodeHelpe
     function strrev($str) {
         $result = array();
 
-        $count = $GLOBALS['__phpmorphy_strlen']($str) / 2;
+        $count = strlen($str) / 2;
         $fmt = $this->int_format_string . $count;
 
         $words = array_reverse(unpack($fmt, $str));
@@ -63,31 +63,31 @@ class phpMorphy_UnicodeHelper_Utf16 extends phpMorphy_UnicodeHelper_UnicodeHelpe
     }
 
     function clearIncompleteCharsAtEnd($str) {
-        $strlen = $GLOBALS['__phpmorphy_strlen']($str);
+        $strlen = strlen($str);
 
         if($strlen & 1) {
             $strlen--;
-            $str = $GLOBALS['__phpmorphy_substr']($str, 0, $strlen);
+            $str = substr($str, 0, $strlen);
         }
 
         if($strlen < 2) {
             return '';
         }
 
-        list(, $ord) = unpack($this->int_format_string, $GLOBALS['__phpmorphy_substr']($str, -2, 2));
+        list(, $ord) = unpack($this->int_format_string, substr($str, -2, 2));
 
         if($this->isSurrogate($ord)) {
             if($strlen < 4) {
                 return '';
             }
 
-            list(, $ord) = unpack($this->int_format_string, $GLOBALS['__phpmorphy_substr']($str, -4, 2));
+            list(, $ord) = unpack($this->int_format_string, substr($str, -4, 2));
 
             if($this->isSurrogate($ord)) {
                 // full surrogate pair
                 return $str;
             } else {
-                return $GLOBALS['__phpmorphy_substr']($str, 0, -2);
+                return substr($str, 0, -2);
             }
         }
 
@@ -95,7 +95,7 @@ class phpMorphy_UnicodeHelper_Utf16 extends phpMorphy_UnicodeHelper_UnicodeHelpe
     }
 
     protected function strlenImpl($str) {
-        $count = $GLOBALS['__phpmorphy_strlen']($str) / 2;
+        $count = strlen($str) / 2;
         $fmt = $this->int_format_string . $count;
 
         foreach(unpack($fmt, $str) as $ord) {

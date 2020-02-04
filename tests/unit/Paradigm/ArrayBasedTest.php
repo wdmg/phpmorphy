@@ -105,4 +105,3 @@ class test_Paradigm_ArrayBased extends PHPUnit_Framework_TestCase
     function testUpdateCommonGrammems() {
     }
 }
-?>

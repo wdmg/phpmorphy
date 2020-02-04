@@ -34,6 +34,6 @@ class phpMorphy_UnicodeHelper_Singlebyte extends phpMorphy_UnicodeHelper_Unicode
     }
 
     protected function strlenImpl($str) {
-        return $GLOBALS['__phpmorphy_strlen']($str);
+        return strlen($str);
     }
 }

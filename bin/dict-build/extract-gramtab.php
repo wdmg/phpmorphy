@@ -1,8 +1,6 @@
 #!/usr/bin/env php
 <?php
-set_include_path(__DIR__ . '/../../src/' . PATH_SEPARATOR . get_include_path());
-require('phpMorphy.php');
-require('gramtab_consts.php');
+require_once(__DIR__ . '/../init.php');
 
 if($argc < 3) {
     echo "Usage " . $argv[0] . " MORPH_DATA_FILE OUT_DIR [case - UPPER or LOWER]";
@@ -68,20 +66,20 @@ class GrammemsProcessor_Common extends GrammemsProcessorAbstract {
 
 class GrammemsProcessor_ru_RU extends GrammemsProcessorAbstract {
     function process($partOfSpeech, $grammems) {
-        if(in_array(PMY_RG_INDECLINABLE, $grammems)) {
+        if(in_array(phpMorphy_GramTab_Constants::PMY_RG_INDECLINABLE, $grammems)) {
             // ������������ ����� ��� ����� ����������� ���� �������
-            if($partOfSpeech !== PMY_RP_PREDK) {
+            if($partOfSpeech !== phpMorphy_GramTab_Constants::PMY_RP_PREDK) {
                $grammems = array_merge($grammems, $this->getAllCases());   
 
                // ����� '������' �� ���������� �� ������, ������� �����
                // ���� ������������ � ����� ������
-               if(!in_array(PMY_RG_SINGULAR, $grammems)) {
-                   $grammems[] = PMY_RG_PLURAL;
-                   $grammems[] = PMY_RG_SINGULAR;
+               if(!in_array(phpMorphy_GramTab_Constants::PMY_RG_SINGULAR, $grammems)) {
+                   $grammems[] = phpMorphy_GramTab_Constants::PMY_RG_PLURAL;
+                   $grammems[] = phpMorphy_GramTab_Constants::PMY_RG_SINGULAR;
                }
             }
             
-            if($partOfSpeech === PMY_RP_PRONOUN_P) {
+            if($partOfSpeech === phpMorphy_GramTab_Constants::PMY_RP_PRONOUN_P) {
                 $grammems = array_merge($grammems, $this->getAllGenders());
                 $grammems = array_merge($grammems, $this->getAllNumbers());
             }
@@ -90,9 +88,9 @@ class GrammemsProcessor_ru_RU extends GrammemsProcessorAbstract {
 
         // ����� ������ ���� ('������') �����  ������������ ��� 
         // ����� �.�., ��� � ��� ����� �.�.
-        if(in_array(PMY_RG_MASC_FEM, $grammems)) {
-            $grammems[] = PMY_RG_MASCULINUM;
-            $grammems[] = PMY_RG_FEMINUM;
+        if(in_array(phpMorphy_GramTab_Constants::PMY_RG_MASC_FEM, $grammems)) {
+            $grammems[] = phpMorphy_GramTab_Constants::PMY_RG_MASCULINUM;
+            $grammems[] = phpMorphy_GramTab_Constants::PMY_RG_FEMINUM;
         }
 
         return array_unique($grammems);
@@ -100,28 +98,28 @@ class GrammemsProcessor_ru_RU extends GrammemsProcessorAbstract {
 
     protected function getAllCases() {
         return array(
-            PMY_RG_NOMINATIV,
-            PMY_RG_GENITIV,
-            PMY_RG_DATIV,
-            PMY_RG_ACCUSATIV,
-            PMY_RG_INSTRUMENTALIS,
-            PMY_RG_LOCATIV,
-            PMY_RG_VOCATIV,
+            phpMorphy_GramTab_Constants::PMY_RG_NOMINATIV,
+            phpMorphy_GramTab_Constants::PMY_RG_GENITIV,
+            phpMorphy_GramTab_Constants::PMY_RG_DATIV,
+            phpMorphy_GramTab_Constants::PMY_RG_ACCUSATIV,
+            phpMorphy_GramTab_Constants::PMY_RG_INSTRUMENTALIS,
+            phpMorphy_GramTab_Constants::PMY_RG_LOCATIV,
+            phpMorphy_GramTab_Constants::PMY_RG_VOCATIV,
         );
     }
 
     protected function getAllGenders() {
         return array(
-            PMY_RG_MASCULINUM,
-            PMY_RG_FEMINUM,
-            PMY_RG_NEUTRUM,
+            phpMorphy_GramTab_Constants::PMY_RG_MASCULINUM,
+            phpMorphy_GramTab_Constants::PMY_RG_FEMINUM,
+            phpMorphy_GramTab_Constants::PMY_RG_NEUTRUM,
         );
     }
 
     protected function getAllNumbers() {
         return array(
-            PMY_RG_PLURAL,
-            PMY_RG_SINGULAR,
+            phpMorphy_GramTab_Constants::PMY_RG_PLURAL,
+            phpMorphy_GramTab_Constants::PMY_RG_SINGULAR,
         );
     }
 }
@@ -170,7 +168,10 @@ class CaseConverter_Lower extends CaseConverterAbstract {
 
 function extract_gramtab($graminfoFile, $outDir, $asText, $case) {
     $factory = new phpMorphy_Storage_Factory();
-    $graminfo = phpMorphy_GramInfo_GramInfoAbstract::create($factory->create(PHPMORPHY_STORAGE_FILE, $graminfoFile, false), false);
+    $graminfo = phpMorphy_GramInfo_GramInfoAbstract::create(
+        $factory->create(phpMorphy::STORAGE_FILE, $graminfoFile, false),
+        false
+    );
     $grammems_processor = GrammemsProcessorAbstract::create($graminfo->getLocale());
 
     $pos_case_converter = CaseConverterAbstract::create($graminfo->getEncoding(), 'upper');

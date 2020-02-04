@@ -1,7 +1,6 @@
 #!/usr/bin/env php
 <?php
-set_include_path(__DIR__ . '/../../src/' . PATH_SEPARATOR . get_include_path());
-require('phpMorphy.php');
+require_once(__DIR__ . '/../init.php');
 
 $current_year = date('Y');
 $marker_text = 'This file is part of phpMorphy project';
@@ -32,14 +31,14 @@ EOS;
 phpMorphy_Util_Fs::applyToEachFile(
     getcwd(),
     '~\.php$~',
-    function($path) use($copyright_text, $marker_text) {
+    function ($path) use ($copyright_text, $marker_text) {
         $content = file_get_contents($path);
-        if(substr($content, 0, 5) !== '<' . '?php' || strpos($content, $marker_text) !== false) {
+        if (substr($content, 0, 5) !== '<' . '?php' || strpos($content, $marker_text) !== false) {
             echo "Skip $path\n";
             return;
         }
 
-        $content = '<' . '?php' . PHP_EOL . $copyright_text . substr($content, 5);;
+        $content = '<' . '?php' . PHP_EOL . $copyright_text . substr($content, 5);
         file_put_contents($path, $content);
     },
     true
