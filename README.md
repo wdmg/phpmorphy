@@ -20,13 +20,13 @@ This library allows to retrieve following morph information for any word:
 
 To install the library in your project using `Composer`, first add the following to your `composer.json`
 config file:
-
-    {
-        "require": {
-            "wdmg/phpmorphy": "~1.0"
-        }
+```javascript
+{
+    "require": {
+        "wdmg/phpmorphy": "~1.0"
     }
-
+}
+```
 Then run Composer's install or update commands to complete installation.
 
 ## Usage

@@ -1,7 +1,4 @@
 <?php
-
-namespace wdmg\phpmorphy;
-
 /*
 * This file is part of phpMorphy project
 *

@@ -26,8 +26,8 @@
         }
     ],
     "autoload": {
-        "psr-4": {
-            "wdmg\\phpmorphy\\": "src/"
+        "psr-0": {
+            "": "src"
         }
     },
     "require": {
