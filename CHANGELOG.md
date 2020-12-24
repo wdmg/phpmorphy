@@ -3,6 +3,7 @@ Changelog
 
 ## 1.3.2 (2020-12-24)
  * Added common_aut.en_us dictionaries. See https://sourceforge.net/projects/phpmorphy/files/phpmorphy-dictionaries/0.3.x/en_EN/
+ * Remove CHANGES file and add CHANGELOG.md
  * Fix prediction by suffix for words with prefix
 
 ## 1.3.1 (2020-05-07)
