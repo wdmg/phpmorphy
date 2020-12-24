@@ -23,7 +23,7 @@ config file:
 ```javascript
 {
     "require": {
-        "wdmg/phpmorphy": "~1.0"
+        "wdmg/phpmorphy": "~1.3"
     }
 }
 ```
